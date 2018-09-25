@@ -191,3 +191,36 @@
 [INFO  - 2018-09-25T22:52:16.478Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
 [INFO  - 2018-09-25T22:52:34.504Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
 [INFO  - 2018-09-25T22:52:39.475Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T22:57:16.467Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T22:57:34.493Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T22:57:39.465Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:02:16.457Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:02:34.483Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:02:39.454Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:07:16.448Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:07:34.476Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:07:39.444Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[ERROR - 2018-09-25T23:10:48.587Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - msg: Unhandled promise rejection TypeError: undefined is not a constructor (evaluating 't.load()')
+[ERROR - 2018-09-25T23:10:48.588Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - stack:
+  (anonymous function) (https://m.media-amazon.com/images/G/01/imdb/js/collections/common-3169276230._CB483414245_.js:2)
+[INFO  - 2018-09-25T23:12:16.438Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:12:34.467Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:12:39.433Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:17:16.428Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:17:34.460Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:17:39.422Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:22:16.418Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:22:34.454Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:22:39.412Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[ERROR - 2018-09-25T23:24:24.320Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - msg: Unhandled promise rejection TypeError: undefined is not a constructor (evaluating 't.load()')
+[ERROR - 2018-09-25T23:24:24.320Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - stack:
+  (anonymous function) (https://m.media-amazon.com/images/G/01/imdb/js/collections/common-3169276230._CB483414245_.js:2)
+[ERROR - 2018-09-25T23:26:52.301Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - msg: Unhandled promise rejection TypeError: undefined is not a constructor (evaluating 't.load()')
+[ERROR - 2018-09-25T23:26:52.301Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - stack:
+  (anonymous function) (https://m.media-amazon.com/images/G/01/imdb/js/collections/common-3169276230._CB483414245_.js:2)
+[INFO  - 2018-09-25T23:27:16.408Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:27:34.444Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2018-09-25T23:27:39.402Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[ERROR - 2018-09-25T23:28:23.763Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - msg: Unhandled promise rejection TypeError: undefined is not a constructor (evaluating 't.load()')
+[ERROR - 2018-09-25T23:28:23.763Z] Session [095ad640-c107-11e8-ba4e-97cef43897bb] - page.onError - stack:
+  (anonymous function) (https://m.media-amazon.com/images/G/01/imdb/js/collections/common-3169276230._CB483414245_.js:2)

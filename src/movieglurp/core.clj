@@ -124,3 +124,34 @@ breaks."
                                 first :content second :content first)})]
       (map map-list-data items))))
 
+(defn get-movie-detail [url]
+  (let [parsed-html (get-parsed-html-from-url-memoized url)
+        items (-> parsed-html (html/select [:body]))]
+    {:title
+     (-> items (html/select [:h1])
+         first :content first cleanup)
+     :rating
+     (-> items (html/select [:.ratingValue :span])
+         first :content first)
+     :year
+     (-> items (html/select [:#titleYear :a])
+         first :content first)
+     :audience
+     (-> items (html/select [:.subtext])
+         first :content first cleanup)
+     :time
+     (-> items (html/select [:time])
+         first :content first cleanup)
+     :genre (into []
+                  (let [a
+                        (-> items
+                            (html/select [:.subtext :a]))]
+                    (map (fn [m]
+
+                           (-> m :content first cleanup)) a)))
+     :summary
+     (-> items
+         (html/select [:.summary_text])
+         first :content first cleanup)}))
+
+
