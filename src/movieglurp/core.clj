@@ -1,5 +1,6 @@
 (ns movieglurp.core
-  (:require [net.cgrand.enlive-html :as html])
+  (:require [net.cgrand.enlive-html :as html]
+            [clojure.string :as str])
   (:use [clj-webdriver.taxi]
         [clj-webdriver.driver :only [init-driver]]))
 
@@ -28,7 +29,13 @@ breaks."
         items (-> parsed-html
                   (html/select [:.list_item]))
         html-row (take 1 items)]
-    (letfn [(get-title [html-row]
+    (letfn [(get-id [html-row]
+              (try (second (re-find #"\/title\/(\w+)\/"
+                                    (-> html-row
+                                        (html/select [:.overview-top :h4 :a])
+                                        first :attrs :href)))
+                   (catch Exception e "-")))
+            (get-title [html-row]
               (try (-> html-row
                        (html/select [:.overview-top :h4 :a])
                        first :content first cleanup)
@@ -41,7 +48,9 @@ breaks."
             (get-time [html-row]
               (try (-> html-row
                        (html/select [:time])
-                       first :content first cleanup)
+                       first :content first cleanup
+                       (str/replace " min" "")
+                       (Integer.))
                    (catch Exception e "-")))
             (get-genre [html-row]
               (try (-> html-row
@@ -54,12 +63,16 @@ breaks."
                        first :content first cleanup)
                    (catch Exception e "-")))
             (get-director [html-row]
-              (-> html-row
-                  (html/select [:.txt-block])
-                  first (html/select [:a]) first :content first cleanup))
+              (try (let [a (-> html-row
+                               (html/select [:.txt-block])
+                               first (html/select [:a]) first)]
+                     {:name (-> a :content first cleanup)
+                      :id (second (re-find #"\/name/(\w+)\/" (-> a :attrs :href)))})
+                   (catch Exception e "-")))
             (get-stars [html-row]
               (into [] (map (fn [m]
-                              (-> m :content first cleanup))
+                              {:name (-> m :content first cleanup)
+                               :id (second (re-find #"\/name\/(\w+)\/" (-> m :attrs :href)))})
                             (-> html-row
                                 (html/select [:.txt-block])
                                 second (html/select [:a])))))
@@ -68,25 +81,13 @@ breaks."
                   (html/select [:.poster])
                   first :attrs :src))
             (map-list-data [html-row]
-              {:title (get-title html-row)
-               :pg (get-pg html-row)
-               :time (get-time html-row)
+              {:director (get-director html-row)
                :genre (get-genre html-row)
+               :pg (get-pg html-row)
+               :poster (get-poster html-row)
                :short-description (get-short-description html-row)
-               :director (get-director html-row)
                :stars (get-stars html-row)
-               :poster (get-poster html-row)})]
+               :time (get-time html-row)
+               :title (get-title html-row)
+               :imdb-id (get-id html-row)})]
       (map map-list-data items))))
-
-
-(get-movie-list-data "https://www.imdb.com/movies-in-theaters")
-(get-movie-list-data "https://www.imdb.com/movies-coming-soon")
-
-
-
-
-
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
