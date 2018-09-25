@@ -25,6 +25,8 @@ breaks."
 (def get-parsed-html-from-url-memoized (memoize get-parsed-html-from-url))
 
 (defn get-movie-list-data [url]
+  "(get-movie-list-data \"https://www.imdb.com/movies-in-theaters\")
+   (get-movie-list-data \"https://www.imdb.com/movies-coming-soon\")"
   (let [parsed-html (get-parsed-html-from-url-memoized url)
         items (-> parsed-html
                   (html/select [:.list_item]))
@@ -91,3 +93,34 @@ breaks."
                :title (get-title html-row)
                :imdb-id (get-id html-row)})]
       (map map-list-data items))))
+
+
+;; Top rated movie list
+(defn get-top-rated-movie-list [url]
+  (let [parsed-html (get-parsed-html-from-url-memoized url)
+        items (-> parsed-html
+                  (html/select [:.lister-list :tr]))]
+    (letfn [(map-list-data [html-row]
+              {:id (let [a (-> html-row
+                               (html/select [:.titleColumn :a])
+                               first)]
+                     (second (re-find #"\/title\/(\w+)\/" (-> a :attrs :href))))
+               :thumb (-> html-row
+                          (html/select [:.posterColumn :img])
+                          first :attrs :src)
+               :name (let [a (-> html-row
+                                 (html/select [:.titleColumn :a])
+                                 first)]
+                       :name (-> a :content first))
+               :rank (let [a (-> html-row
+                                 (html/select [:.titleColumn])
+                                 first)]
+                       (second (re-find #"(\w+)\." (-> a :content first cleanup))))
+               :date (-> html-row
+                         (html/select [:.titleColumn :.secondaryInfo])
+                         first :content first (str/replace "(" "") (str/replace ")" ""))
+               :imdb-rating (-> html-row
+                                (html/select [:.imdbRating])
+                                first :content second :content first)})]
+      (map map-list-data items))))
+

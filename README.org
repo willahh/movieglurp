@@ -1,0 +1,137 @@
+* movieglurp
+
+A Clojure library designed to scrapp imbd.com
+
+** Usage
+#+BEGIN_SRC clojure
+  (get-movie-list-data "https://www.imdb.com/movies-in-theaters")
+  ({:genre "Comedy",
+    :pg "PG-13",
+    :director {:name "Malcolm D. Lee", :id "nm0002700"},
+    :short-description
+    "A group of troublemakers are forced to attend night school in hope that they'll pass the GED exam to finish high school.",
+    :time 111,
+    :title "Night School (2018)",
+    :imdb-id "tt6781982",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BYzEyYzg5N2YtZmYzZC00OTg0LWE3ZmYtNDZhMGFkOTBjOTYxXkEyXkFqcGdeQXVyNDg2MjUxNjM@._V1_UX140_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Tiffany Haddish", :id "nm1840504"}
+     {:name "Kevin Hart", :id "nm0366389"}
+     {:name "Brooke Butler", :id "nm4703551"}
+     {:name "Taran Killam", :id "nm0453115"}]}
+   {:genre "Animation",
+    :pg "PG",
+    :director {:name "Karey Kirkpatrick", :id "nm0456732"},
+    :short-description
+    "A Yeti is convinced that the elusive creatures known as \"humans\" really do exist.",
+    :time 96,
+    :title "Yéti & Compagnie (2018)",
+    :imdb-id "tt6182908",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BMTc5NzI1NjY4MV5BMl5BanBnXkFtZTgwNDIxNTIyNDM@._V1_UY209_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Channing Tatum", :id "nm1475594"}
+     {:name "James Corden", :id "nm0179479"}
+     {:name "Zendaya", :id "nm3918035"}
+     {:name "Common", :id "nm0996669"}]}
+   {:genre "Horror",
+    :pg "R",
+    :director {:name "Gregory Plotkin", :id "nm0687427"},
+    :short-description
+    "A masked serial killer turns a horror themed amusement park into his own personal playground, terrorizing a group of friends while the rest of the patrons believe that it is all part of the show.",
+    :time "-",
+    :title "Hell Fest (2018)",
+    :imdb-id "tt1999890",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BYzg2MTNjOGUtZDk3OS00OGJkLWIyZWYtZGQxMmI5MTRkNzcxXkEyXkFqcGdeQXVyODAzODU1NDQ@._V1_UY209_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Bex Taylor-Klaus", :id "nm4545813"}
+     {:name "Reign Edwards", :id "nm3913726"}
+     {:name "Amy Forsyth", :id "nm5046593"}
+     {:name "Tony Todd", :id "nm0865302"}]})
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (get-movie-list-data "https://www.imdb.com/movies-coming-soon")
+  ({:genre "Action",
+    :pg "PG-13",
+    :director {:name "Ruben Fleischer", :id "nm0281508"},
+    :short-description
+    "When Eddie Brock acquires the powers of a symbiote, he will have to release his alter-ego \"Venom\" to save his life.",
+    :time 112,
+    :title "Venom (2018)",
+    :imdb-id "tt1270797",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BMTU3MTQyNjQwM15BMl5BanBnXkFtZTgwNDgxNDczNTM@._V1_UY209_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Tom Hardy", :id "nm0362766"}
+     {:name "Michelle Williams", :id "nm0931329"}
+     {:name "Woody Harrelson", :id "nm0000437"}
+     {:name "Jenny Slate", :id "nm2809577"}]}
+   {:genre "Drama",
+    :pg "R",
+    :director {:name "Bradley Cooper", :id "nm0177896"},
+    :short-description
+    "A musician helps a young singer and actress find fame, even as age and alcoholism send his own career into a downward spiral.",
+    :time 135,
+    :title "A Star Is Born (2018)",
+    :imdb-id "tt1517451",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BMjE3MDQ0MTA3M15BMl5BanBnXkFtZTgwMDMwNDY2NTM@._V1_UY209_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Lady Gaga", :id "nm3078932"}
+     {:name "Bradley Cooper", :id "nm0177896"}
+     {:name "Sam Elliott", :id "nm0000385"}
+     {:name "Greg Grunberg", :id "nm0342399"}]}
+   {:genre "Drama",
+    :pg "R",
+    :director {:name "Rupert Everett", :id "nm0000391"},
+    :short-description
+    "The untold story of the last days in the tragic times of",
+    :time 105,
+    :title "The Happy Prince (2018)",
+    :imdb-id "tt2404639",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BODVjZThlMzMtZjQwNy00YjRlLWE5ZTMtMWVlMWUwM2U1NjRkXkEyXkFqcGdeQXVyODcyODY1Mzg@._V1_UY209_CR0,0,140,209_AL_.jpg",
+    :stars
+    [{:name "Rupert Everett", :id "nm0000391"}
+     {:name "Colin Firth", :id "nm0000147"}
+     {:name "Emily Watson", :id "nm0001833"}
+     {:name "Colin Morgan", :id "nm2959880"}]})
+
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (get-top-rated-movie-list "https://www.imdb.com/chart/top")
+  ({:id "tt0111161",
+    :thumb
+    "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UY67_CR0,0,45,67_AL_.jpg",
+    :name "Les évadés",
+    :rank "1",
+    :date "1994",
+    :imdb-rating "9,2"}
+   {:id "tt0068646",
+    :thumb
+    "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg",
+    :name "Le parrain",
+    :rank "2",
+    :date "1972",
+    :imdb-rating "9,2"}
+   {:id "tt0071562",
+    :thumb
+    "https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY67_CR1,0,45,67_AL_.jpg",
+    :name "Le parrain, 2ème partie",
+    :rank "3",
+    :date "1974",
+    :imdb-rating "9,0"})
+
+#+END_SRC
+
+** License
+
+Copyright © 2018 William Ravel
+
+Distributed under the Eclipse Public License either version 1.0 or (at
+your option) any later version.
