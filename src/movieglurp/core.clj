@@ -1,6 +1,7 @@
 (ns movieglurp.core
   (:require [net.cgrand.enlive-html :as html]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [pl.danieljanus.tagsoup :as tagsoup])
   (:use [clj-webdriver.taxi]
         [clj-webdriver.driver :only [init-driver]]))
 
@@ -18,11 +19,18 @@ breaks."
               (clojure.string/replace #"" ""))
       ""))
 
+(defn remove-meta-itemprop [html]
+  (str/replace html #"<meta itemprop=\"(\w+)\" content=\"(.+)\">" ""))
+
 (defn get-parsed-html-from-url [url]
   (get-url url)
-  (html/html-snippet (html "body")))
+  (-> (html "body")
+      (remove-meta-itemprop)
+      (html/html-snippet)))
 
 (def get-parsed-html-from-url-memoized (memoize get-parsed-html-from-url))
+(def get-parsed-html-from-url-memoized2 (memoize get-parsed-html-from-url))
+(def get-parsed-html-from-url-memoized3 (memoize get-parsed-html-from-url))
 
 (defn get-movie-list-data [url]
   "(get-movie-list-data \"https://www.imdb.com/movies-in-theaters\")
@@ -154,4 +162,46 @@ breaks."
          (html/select [:.summary_text])
          first :content first cleanup)}))
 
+
+(defn get-movie-list-data-from-search [url]
+  (let [parsed-html (get-parsed-html-from-url-memoized3 url)
+        nodes (-> parsed-html
+                  (html/select [:.lister-item]))]
+    (letfn [(map-list-data [node]
+              {:director ""
+               :genre (try (-> node
+                               (html/select [:.genre])
+                               first :content first cleanup) 
+                           (catch Exception e ""))
+               :pg (try (-> node
+                            (html/select [:.text-muted :.certificate])
+                            first :content first cleanup)
+                        (catch Exception e ""))
+               :poster (try (-> node
+                                (html/select [:img])
+                                first :attrs :src)
+                            (catch Exception e ""))
+               :short-description (try (-> node
+                                           (html/select [:.text-muted])
+                                           (nth 2) :content first cleanup) 
+                                       (catch Exception e ""))
+               :stars ""
+               :time (try (-> node
+                              (html/select [:.text-muted :.runtime])
+                              first :content first cleanup (str/replace " min" ""))
+                          (catch Exception e ""))
+               :title (try (-> node
+                               (html/select [:.lister-item-header :a])
+                               first :content first cleanup)
+                           (catch Exception e ""))
+               :imdb-id ""}
+              )]
+      (map map-list-data nodes))))
+
+
+
+;; (get-movie-list-data "https://www.imdb.com/movies-in-theaters")
+;; (get-movie-list-data "https://www.imdb.com/movies-coming-soon")
+;; (get-top-rated-movie-list "https://www.imdb.com/chart/top")
+;; (get-movie-list-data-from-search "https://www.imdb.com/search/title?genres=comedy&explore=title_type,genres")
 
