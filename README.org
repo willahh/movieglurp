@@ -3,6 +3,7 @@
 A Clojure library designed to scrapp imbd.com
 
 ** Usage
+Get movie list from movies-in-theaters
 #+BEGIN_SRC clojure
   (get-movie-list-data "https://www.imdb.com/movies-in-theaters")
   ({:genre "Comedy",
@@ -53,6 +54,7 @@ A Clojure library designed to scrapp imbd.com
 
 #+END_SRC
 
+Get movie list from movies-coming-soon
 #+BEGIN_SRC clojure
   (get-movie-list-data "https://www.imdb.com/movies-coming-soon")
   ({:genre "Action",
@@ -103,6 +105,7 @@ A Clojure library designed to scrapp imbd.com
 
 #+END_SRC
 
+Get top rated movie list
 #+BEGIN_SRC clojure
   (get-top-rated-movie-list "https://www.imdb.com/chart/top")
   ({:id "tt0111161",
@@ -129,6 +132,62 @@ A Clojure library designed to scrapp imbd.com
 
 #+END_SRC
 
+Get movie list from search query
+#+BEGIN_SRC clojure
+  (get-movie-list-data-from-search "https://www.imdb.com/search/title?genres=comedy&explore=title_type,genres")
+
+  ({:genre "Comedy, Crime, Drama",
+    :pg "Tous publics",
+    :director "Paul Feig",
+    :short-description
+    "A woman seeks to uncover the truth behind the disappearance of her best friend.",
+    :time "117",
+    :title "L'ombre d'Emily",
+    :imdb-id "tt7040874",
+    :poster
+    "https://m.media-amazon.com/images/M/MV5BZjFiMGNiNmItMzNiNi00Mjc1LTg1N2YtNWE2NTE5N2VlZTQ3XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX67_CR0,0,67,98_AL_.jpg",
+    :stars ""}
+   {:genre "Comedy, Drama",
+    :pg "Tous publics",
+    :director "Emmy Rossum",
+    :short-description
+    "An alcoholic man lives in a perpetual stupor while his six children cope as best they can.",
+    :time "46",
+    :title "Shameless",
+    :imdb-id "tt1586680",
+    :poster
+    "https://m.media-amazon.com/images/G/01/imdb/images/nopicture/large/film-184890147._CB470041630_.png",
+    :stars ""})
+#+END_SRC
+
+Get movie list from search and write to file
+#+BEGIN_SRC clojure
+(scrap-data-from-url-and-write-to-file get-movie-list-data-from-search "https://www.imdb.com/search/title?genres=comedy&explore=title_type,genres&page=1")
+#+END_SRC
+
+will produce the file "resources/data/search_title-genres=comedy-explore=title_type,genres-page=1.json"
+#+BEGIN_SRC json
+  [{"genre":"Comedy, Crime, Drama",
+    "pg":"Tous publics",
+    "director":"Paul Feig",
+    "short-description":
+    "A woman seeks to uncover the truth behind the disappearance of her best friend.",
+    "time":"117",
+    "title":"L'ombre d'Emily",
+    "imdb-id":"tt7040874",
+    "poster":   "https:\/\/m.media-amazon.com\/images\/M\/MV5BZjFiMGNiNmItMzNiNi00Mjc1LTg1N2YtNWE2NTE5N2VlZTQ3XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX67_CR0,0,67,98_AL_.jpg",
+    "stars":""},
+   {"genre":"Comedy, Drama",
+    "pg":"Tous publics",
+    "director":"Emmy Rossum",
+    "short-description":
+    "An alcoholic man lives in a perpetual stupor while his six children cope as best they can.",
+    "time":"46",
+    "title":"Shameless",
+    "imdb-id":"tt1586680",
+    "poster":   "https:\/\/m.media-amazon.com\/images\/G\/01\/imdb\/images\/nopicture\/large\/film-184890147._CB470041630_.png",
+    "stars":""}]
+#+END_SRC
 ** License
 
 Copyright © 2018 William Ravel

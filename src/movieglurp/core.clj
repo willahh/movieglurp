@@ -1,7 +1,9 @@
 (ns movieglurp.core
-  (:require [net.cgrand.enlive-html :as html]
+  (:require [clojure.java.io :as io]
+            [net.cgrand.enlive-html :as html]
             [clojure.string :as str]
-            [pl.danieljanus.tagsoup :as tagsoup])
+            [pl.danieljanus.tagsoup :as tagsoup]
+            [clojure.data.json :as json])
   (:use [clj-webdriver.taxi]
         [clj-webdriver.driver :only [init-driver]]))
 
@@ -22,15 +24,32 @@ breaks."
 (defn remove-meta-itemprop [html]
   (str/replace html #"<meta itemprop=\"(\w+)\" content=\"(.+)\">" ""))
 
+(defn write-to-file [parsed-data-map file-path]
+  (with-open [output-buffer (io/writer (str/join ["resources/data/" file-path]))]
+    (.write output-buffer (with-out-str (json/pprint parsed-data-map)))))
+
+(defn file-path-from-url [url]
+  (str/join [(-> url
+                 (str/replace #"https:\/\/www\.imdb\.com\/" "")
+                 (str/replace #"/" "_")
+                 (str/replace #"\?" "-")
+                 (str/replace #"&" "-"))
+             ".json"]))
+
 (defn get-parsed-html-from-url [url]
   (get-url url)
   (-> (html "body")
       (remove-meta-itemprop)
       (html/html-snippet)))
 
+(defn scrap-data-from-url-and-write-to-file [scrap-fn url]
+  (let [file-path (file-path-from-url url)]
+    (write-to-file (scrap-fn url) file-path)))
+
 (def get-parsed-html-from-url-memoized (memoize get-parsed-html-from-url))
 (def get-parsed-html-from-url-memoized2 (memoize get-parsed-html-from-url))
 (def get-parsed-html-from-url-memoized3 (memoize get-parsed-html-from-url))
+(def get-parsed-html-from-url-memoized4 (memoize get-parsed-html-from-url))
 
 (defn get-movie-list-data [url]
   "(get-movie-list-data \"https://www.imdb.com/movies-in-theaters\")
@@ -162,13 +181,15 @@ breaks."
          (html/select [:.summary_text])
          first :content first cleanup)}))
 
-
 (defn get-movie-list-data-from-search [url]
-  (let [parsed-html (get-parsed-html-from-url-memoized3 url)
+  (let [parsed-html (get-parsed-html-from-url-memoized url)
         nodes (-> parsed-html
                   (html/select [:.lister-item]))]
     (letfn [(map-list-data [node]
-              {:director ""
+              {:director (try (-> node
+                                  (html/select [:p :a])
+                                  first :content first cleanup)
+                              (catch Exception e ""))
                :genre (try (-> node
                                (html/select [:.genre])
                                first :content first cleanup) 
@@ -194,14 +215,9 @@ breaks."
                                (html/select [:.lister-item-header :a])
                                first :content first cleanup)
                            (catch Exception e ""))
-               :imdb-id ""}
-              )]
+               :imdb-id (try (second (re-find #"\/title\/(\w+)\/"
+                                              (-> node
+                                                  (html/select [:.lister-item-header :a])
+                                                  first :attrs :href cleanup)))
+                             (catch Exception e ""))})]
       (map map-list-data nodes))))
-
-
-
-;; (get-movie-list-data "https://www.imdb.com/movies-in-theaters")
-;; (get-movie-list-data "https://www.imdb.com/movies-coming-soon")
-;; (get-top-rated-movie-list "https://www.imdb.com/chart/top")
-;; (get-movie-list-data-from-search "https://www.imdb.com/search/title?genres=comedy&explore=title_type,genres")
-

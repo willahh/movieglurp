@@ -7,4 +7,5 @@
                  [com.github.detro.ghostdriver/phantomjsdriver "1.0.3"]
                  [enlive "1.1.6"]
                  [clj-webdriver "0.7.2"]
-                 [clj-tagsoup "0.3.0"]])
+                 [clj-tagsoup "0.3.0"]
+                 [org.clojure/data.json "0.2.6"]])
