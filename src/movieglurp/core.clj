@@ -24,17 +24,17 @@ breaks."
 (defn remove-meta-itemprop [html]
   (str/replace html #"<meta itemprop=\"(\w+)\" content=\"(.+)\">" ""))
 
-(defn write-to-file [parsed-data-map file-path]
-  (with-open [output-buffer (io/writer (str/join ["resources/data/" file-path]))]
-    (.write output-buffer (with-out-str (json/pprint parsed-data-map)))))
+;; (defn write-to-file [parsed-data-map file-path]
+;;   (with-open [output-buffer (io/writer (str/join ["resources/data/" file-path]))]
+;;     (.write output-buffer (with-out-str (json/pprint parsed-data-map)))))
 
-(defn file-path-from-url [url]
-  (str/join [(-> url
-                 (str/replace #"https:\/\/www\.imdb\.com\/" "")
-                 (str/replace #"/" "_")
-                 (str/replace #"\?" "-")
-                 (str/replace #"&" "-"))
-             ".json"]))
+;; (defn file-path-from-url [url]
+;;   (str/join [(-> url
+;;                  (str/replace #"https:\/\/www\.imdb\.com\/" "")
+;;                  (str/replace #"/" "_")
+;;                  (str/replace #"\?" "-")
+;;                  (str/replace #"&" "-"))
+;;              ".json"]))
 
 (defn get-parsed-html-from-url [url]
   (get-url url)
@@ -42,14 +42,11 @@ breaks."
       (remove-meta-itemprop)
       (html/html-snippet)))
 
-(defn scrap-data-from-url-and-write-to-file [scrap-fn url]
-  (let [file-path (file-path-from-url url)]
-    (write-to-file (scrap-fn url) file-path)))
+;; (defn scrap-data-from-url-and-write-to-file [scrap-fn url]
+;;   (let [file-path (file-path-from-url url)]
+;;     (write-to-file (scrap-fn url) file-path)))
 
 (def get-parsed-html-from-url-memoized (memoize get-parsed-html-from-url))
-(def get-parsed-html-from-url-memoized2 (memoize get-parsed-html-from-url))
-(def get-parsed-html-from-url-memoized3 (memoize get-parsed-html-from-url))
-(def get-parsed-html-from-url-memoized4 (memoize get-parsed-html-from-url))
 
 (defn get-movie-list-data [url]
   "(get-movie-list-data \"https://www.imdb.com/movies-in-theaters\")

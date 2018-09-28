@@ -2,6 +2,10 @@
 
 A Clojure library designed to scrapp imbd.com
 
+**
+Read
+http://www.solrtutorial.com/solr-query-syntax.html
+
 ** Usage
 Get movie list from movies-in-theaters
 #+BEGIN_SRC clojure

@@ -8,4 +8,6 @@
                  [enlive "1.1.6"]
                  [clj-webdriver "0.7.2"]
                  [clj-tagsoup "0.3.0"]
-                 [org.clojure/data.json "0.2.6"]])
+                 [org.clojure/data.json "0.2.6"]
+                 [clj-http "3.9.1"]
+                 [cheshire "5.8.1"]])
