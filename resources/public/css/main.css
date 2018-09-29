@@ -1,0 +1,82 @@
+/* ButtonLink/style.css */
+.ui.button.link,
+.ui.button.link:hover,
+.ui.button.link:focus {
+    background: none;
+    text-decoration: underline;
+    box-shadow: none;
+}
+
+/* header */
+.header-main.ui.menu .item {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.filters {
+    width: 100%;
+    height: auto;
+    padding-top: 15px;
+    min-height: 70px;
+    border-top: 1px solid #DDD;
+}
+
+/* .filters > * { */
+/*     background-color: rgb(255, 255, 255); */
+/*     border-bottom-color: rgba(190, 190, 190, 0.5); */
+/*     border-bottom-left-radius: 25px; */
+/*     border-bottom-right-radius: 25px; */
+/*     border-bottom-style: solid; */
+/*     border-bottom-width: 1px; */
+/*     border-image-outset: 0; */
+/*     border-image-repeat: stretch stretch; */
+/*     border-image-slice: 100%; */
+/*     border-image-source: none; */
+/*     border-image-width: 1; */
+/*     border-left-color: rgba(190, 190, 190, 0.5); */
+/*     border-left-style: solid; */
+/*     border-left-width: 1px; */
+/*     border-right-color: rgba(190, 190, 190, 0.5); */
+/*     border-right-style: solid; */
+/*     border-right-width: 1px; */
+/*     border-top-color: rgba(190, 190, 190, 0.5); */
+/*     border-top-left-radius: 25px; */
+/*     border-top-right-radius: 25px; */
+/*     border-top-style: solid; */
+/*     border-top-width: 1px; */
+/*     color: rgb(102, 102, 102); */
+/*     cursor: pointer; */
+/*     display: inline-block; */
+/*     font-family: "Gotham A", "Gotham B"; */
+/*     font-size: 11px; */
+/*     font-style: normal; */
+/*     font-weight: 700; */
+/*     line-height: 23px; */
+/*     margin-bottom: 10px; */
+/*     margin-right: 10px; */
+/*     padding-bottom: 0px; */
+/*     padding-left: 10px; */
+/*     padding-right: 10px; */
+/*     padding-top: 0px; */
+/*     pointer-events: auto; */
+/*     position: relative; */
+/*     text-transform: uppercase; */
+/*     transform: matrix(1, 0, 0, 1, 0, 0); */
+/*     transition-delay: 0s; */
+/*     transition-duration: 0.2s; */
+/*     transition-property: opacity; */
+/*     transition-timing-function: ease; */
+/*     width: 160.733px; */
+/*     -moz-osx-font-smoothing: grayscale; */
+/*     -moz-user-select: none; */
+/* } */
+
+/* .filters > *:hover { */
+/*     opacity: 0.7; */
+/* } */
+
+/* .filters > .selected { */
+/*     background-color: #333; */
+/*     color: #FFF; */
+/* } */
+
