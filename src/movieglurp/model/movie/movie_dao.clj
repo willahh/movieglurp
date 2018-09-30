@@ -1,26 +1,29 @@
 (ns movieglurp.model.movie.movie-dao
   (:require [wlh.helper.solr-helper :refer :all]
+            [movieglurp.service.db.db :as db]
             [movieglurp.model.movie.movie-schema :as schema]))
 
 (defn find-by-imdb-id [imbd-id]
-  (-> (query connection :q (str "imdb-id:" imbd-id))
+  (-> (db/connection :q (str "imdb-id:" imbd-id))
       schema/get-movie-record-from-query-result
       first))
 
+(def collection db/core-slr-sample)
+
 (defn find-list
   ([]
-   (-> (query connection :q (str "imdb-id:*"))))
+   (-> (query db/connection collection :q (str "imdb-id:*"))))
 
   ([start limit]
-   (-> (query connection :q (str "imdb-id:*")
+   (-> (query db/connection collection :q (str "imdb-id:*")
               :start start :rows limit)))
 
   ([start limit order asc]
-   (-> (query connection :q (str "imdb-id:*")
+   (-> (query db/connection collection :q (str "imdb-id:*")
               :start start :rows limit)))
 
   ([start limit order asc p-query]
-   (-> (query connection :q p-query
+   (-> (query db/connection collection :q p-query
               :start start :rows limit))))
 
 (defn find-list-for-home [session params]
@@ -47,8 +50,8 @@
        :limit limit
        :records (schema/get-movie-record-from-query-result select-response)})))
 
-(defn get-movie-facet []
-  (->> (query connection :q (str "imdb-id:*")
+(defn get-movie-facet [genre]
+  (->> (query db/connection collection :q (str "imdb-id:*")
               :facet "on" :facet-field "genre")
        :facet_counts :facet_fields :genre
        (partition 2)

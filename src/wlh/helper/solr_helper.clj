@@ -19,7 +19,7 @@
        (map vec)
        (into m)))
 
-(defn query [connection &
+(defn query [connection core &
              {:keys [q      ;; query
                      fq     ;; filter
                      sort   ;; sort
@@ -37,7 +37,7 @@
   (-> (client/get (str "http://"
                        (connection :address)
                        "/solr/"
-                       (connection :core)
+                       core
                        "/select")
                   {:query-params
                    (?assoc {"q"     q}

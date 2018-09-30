@@ -137,7 +137,7 @@
          records :records
          offset :offset
          limit :limit} (movie-dao/find-list-for-home session page-params) 
-        movie-facet (movie-dao/get-movie-facet)]
+        movie-facet (movie-dao/get-movie-facet genre-list)]
     (-> [:div {:style "padding-top: 20px;"}
          (debug-html request context session params page-params count offset limit total)
          [:form {:class "left floated" :method "get" :action ""}
