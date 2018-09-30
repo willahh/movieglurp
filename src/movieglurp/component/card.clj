@@ -9,6 +9,6 @@
     [:div {:class "header"}
      title]
     [:div {:class "meta"}
-     meta]
+     (str/join "," meta)]
     [:div {:class "description" :style "min-height: 52px;"}
      description]]])

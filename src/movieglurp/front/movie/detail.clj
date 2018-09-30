@@ -12,14 +12,13 @@
   (let [session (:session request)
         params (:params request)
         context (:context request)]
-    (let [alloid (:alloid params)
-          movie-record (movie-dao/find-by-alloid alloid)]
+    (let [imdb-id (:imdb-id params)
+          movie-record (movie-dao/find-by-imdb-id imdb-id)]
       (-> [:div {:style "padding-top: 20px;"}
-
            (card/card-html (:context request)
-                           (:alloid movie-record)
+                           (:imdb-id movie-record)
                            (:title movie-record)
-                           (:description movie-record)
+                           (:short-description movie-record)
                            (get-thumb-path movie-record)
                            (:genre movie-record))]
           (main/wrap-page-html request)))))

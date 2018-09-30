@@ -17,7 +17,7 @@
                       (GET "/" request
                            (-> (home/get-html request)
                                ))
-                      (GET "/:alloid" request
+                      (GET "/:imdb-id" request
                            (-> (movie-detail/get-html request)
                                (wrap-site-route request))))
              ))

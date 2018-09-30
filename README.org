@@ -6,6 +6,20 @@ A Clojure library designed to scrapp imbd.com
 Read
 http://www.solrtutorial.com/solr-query-syntax.html
 
+** Start
+Start Solr server
+#+BEGIN_SRC sh
+./solr start
+#+END_SRC
+
+Start the web server
+#+BEGIN_SRC sh
+lein ring server
+#+END_SRC
+
+http://localhost:3000/site/movie/
+http://localhost:8983/solr/
+
 ** Usage
 Get movie list from movies-in-theaters
 #+BEGIN_SRC clojure

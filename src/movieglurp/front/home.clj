@@ -128,7 +128,7 @@
         page (Integer. (or (:page page-params) 1))
 
         ;; Parameters
-        genre (or (:genre page-params) [""])
+        genre (or (:genre page-params) "")
 
         genre-list (str/split genre #",")
         
@@ -139,13 +139,13 @@
          limit :limit} (movie-dao/find-list-for-home session page-params) 
         movie-facet (movie-dao/get-movie-facet)]
     (-> [:div {:style "padding-top: 20px;"}
-  (debug-html request context session params page-params count offset limit total)
-  [:form {:class "left floated" :method "get" :action ""}
-   [:input {:type "hidden" :name "page" :value 1}]
-   [:div
-    (facet-html movie-facet genre-list)
-    (crud-list/filter-option-html {:limit 10 :q "t"} context page offset limit count)
-    (card-list-html context records)]]]
+         (debug-html request context session params page-params count offset limit total)
+         [:form {:class "left floated" :method "get" :action ""}
+          [:input {:type "hidden" :name "page" :value 1}]
+          [:div
+           (facet-html movie-facet genre-list)
+           (crud-list/filter-option-html {:limit 10 :q "t"} context page offset limit count)
+           (card-list-html context records)]]]
         (main/wrap-page-html request))))
 
 

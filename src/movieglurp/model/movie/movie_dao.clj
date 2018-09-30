@@ -2,13 +2,10 @@
   (:require [wlh.helper.solr-helper :refer :all]
             [movieglurp.model.movie.movie-schema :as schema]))
 
-;; (defn insert! [record]
-;;   "Insert a record into database."
-;;   )
-
-(defn find-by-alloid [imbd-id]
+(defn find-by-imdb-id [imbd-id]
   (-> (query connection :q (str "imdb-id:" imbd-id))
-      :response :docs first))
+      schema/get-movie-record-from-query-result
+      first))
 
 (defn find-list
   ([]
@@ -22,8 +19,8 @@
    (-> (query connection :q (str "imdb-id:*")
               :start start :rows limit)))
 
-  ([start limit order asc criteria-list]
-   (-> (query connection :q (str "imdb-id:*")
+  ([start limit order asc p-query]
+   (-> (query connection :q p-query
               :start start :rows limit))))
 
 (defn find-list-for-home [session params]
@@ -34,21 +31,21 @@
         asc :ASC
         genre (:genre params)]
     
-    (def criteria-list `())
-
-    ;; (when (and genre (not= genre ""))
-    ;;   (def genre-list (str/split genre #","))
-    ;;   (def criteria-list `((korma.core/where (~'or ~@(map (fn [m]
-    ;;                                                         {:genre m}) genre-list))))))
-    
-    (let [select-response (find-list offset limit order asc)]
+    (let [genre-list (if genre
+                       (clojure.string/split genre #",")
+                       [""])
+          q (when (and genre (not= genre ""))
+              (clojure.string/join
+               ""
+               ["genre: " "(" (clojure.string/join " " (into []  genre-list)) ")"]))
+          select-response (find-list offset limit order asc q)]
       {:total (-> select-response
                   :response :numFound)
        :count (-> select-response
                   :response :docs count)
        :offset offset
        :limit limit
-       :records (schema/get-movie-record-from-query-result2 select-response)})))
+       :records (schema/get-movie-record-from-query-result select-response)})))
 
 (defn get-movie-facet []
   (->> (query connection :q (str "imdb-id:*")

@@ -3,15 +3,11 @@
             [clojure.data.json :as json]
             [clojure.test :as t]))
 
-(def connection {:username ""
-                 :password ""
-                 :address "127.0.0.1:8983"
-                 :core "Solr_sample"})
-
-(defn add-docs [connection docs]
+(defn add-docs [connection core commit docs]
   (client/post (str "http://" (connection :address)
-                    "/solr/" (connection :core)
-                    "/update")
+                    "/solr/" core
+                    "/update"
+                    (when commit) "?commit=true")
                {:form-params docs :content-type :json}))
 
 (defn ?assoc

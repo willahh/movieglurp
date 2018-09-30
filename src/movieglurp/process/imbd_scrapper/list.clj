@@ -179,45 +179,46 @@ breaks."
          first :content first cleanup)}))
 
 (defn get-movie-list-data-from-search [url]
-  (let [parsed-html (get-parsed-html-from-url-memoized url)
-        nodes (-> parsed-html
-                  (html/select [:.lister-item]))]
-    (letfn [(map-list-data [node]
-              {:director (try (-> node
-                                  (html/select [:p :a])
+  (into []
+        (let [parsed-html (get-parsed-html-from-url-memoized url)
+              nodes (-> parsed-html
+                        (html/select [:.lister-item]))]
+          (letfn [(map-list-data [node]
+                    {:director (try (-> node
+                                        (html/select [:p :a])
+                                        first :content first cleanup)
+                                    (catch Exception e ""))
+                     :genre (try (-> node
+                                     (html/select [:.genre])
+                                     first :content first cleanup) 
+                                 (catch Exception e ""))
+                     :pg (try (-> node
+                                  (html/select [:.text-muted :.certificate])
                                   first :content first cleanup)
                               (catch Exception e ""))
-               :genre (try (-> node
-                               (html/select [:.genre])
-                               first :content first cleanup) 
-                           (catch Exception e ""))
-               :pg (try (-> node
-                            (html/select [:.text-muted :.certificate])
-                            first :content first cleanup)
-                        (catch Exception e ""))
-               :poster (try (-> node
-                                (html/select [:img])
-                                first :attrs :src)
-                            (catch Exception e ""))
-               :short-description (try (-> node
-                                           (html/select [:.text-muted])
-                                           (nth 2) :content first cleanup) 
-                                       (catch Exception e ""))
-               :stars (try (-> node
-                               (html/select [:.rating-rating :span])
-                               first :content first cleanup)
-                           (catch Exception e ""))
-               :time (try (-> node
-                              (html/select [:.text-muted :.runtime])
-                              first :content first cleanup (str/replace " min" ""))
-                          (catch Exception e ""))
-               :title (try (-> node
-                               (html/select [:.lister-item-header :a])
-                               first :content first cleanup)
-                           (catch Exception e ""))
-               :imdb-id (try (second (re-find #"\/title\/(\w+)\/"
-                                              (-> node
-                                                  (html/select [:.lister-item-header :a])
-                                                  first :attrs :href cleanup)))
-                             (catch Exception e ""))})]
-      (map map-list-data nodes))))
+                     :poster (try (-> node
+                                      (html/select [:img])
+                                      first :attrs :src)
+                                  (catch Exception e ""))
+                     :short-description (try (-> node
+                                                 (html/select [:.text-muted])
+                                                 (nth 2) :content first cleanup) 
+                                             (catch Exception e ""))
+                     :stars (try (-> node
+                                     (html/select [:.rating-rating :span])
+                                     first :content first cleanup)
+                                 (catch Exception e ""))
+                     :time (try (-> node
+                                    (html/select [:.text-muted :.runtime])
+                                    first :content first cleanup (str/replace " min" ""))
+                                (catch Exception e ""))
+                     :title (try (-> node
+                                     (html/select [:.lister-item-header :a])
+                                     first :content first cleanup)
+                                 (catch Exception e ""))
+                     :imdb-id (try (second (re-find #"\/title\/(\w+)\/"
+                                                    (-> node
+                                                        (html/select [:.lister-item-header :a])
+                                                        first :attrs :href cleanup)))
+                                   (catch Exception e ""))})]
+            (map map-list-data nodes)))))
